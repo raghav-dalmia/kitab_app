@@ -14,6 +14,9 @@
         <!-- fontawesome dependencies -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+        <!-- link custom css -->
+        <link rel="stylesheet" href="../static/index.css">
+
     </head>
     <body>
         
@@ -103,7 +106,7 @@
 
       {% for book in books %}
       <div class="card">
-        <img class="card-img-top" src="../static/book.jpg" alt="Card image cap" style="width: 100%; height: 15vw; object-fit: cover;">
+        <img class="card-img-top" src="../static/book.jpg" alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title text-center">{{ book.title }}</h5>
           <p class="card-text"><strong>Location: </strong>{{ book.location }}
