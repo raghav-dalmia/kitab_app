@@ -46,6 +46,10 @@
             </div>
         </nav>
 
+        {% for message in get_flashed_messages() %}
+            <div class="alert-error">Error: {{ message }}</div>
+        {% endfor %}
+
         <div class="card" id="donation-form">
             <div class="card-body">
                 <form action="/donation-form" method="post">

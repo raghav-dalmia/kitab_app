@@ -15,6 +15,9 @@
         <!-- fontawesome dependencies -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+        <!-- link custom css -->
+        <link rel="stylesheet" href="../../static/show_book.css">
+
     </head>
     <body>
 
@@ -43,31 +46,90 @@
             </div>
         </nav>
 
-        <div class="card" style="width: 95%; margin-left: auto; margin-right: auto;">
-            <div class="row no-gutters">
-              <div class="col-md-4">
-                <img class="card-img" src="../../static/book.jpg" alt="Card image cap" style="width: 100%; height: 15vw; object-fit: cover;">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">{{ book.title }}</h5>
-                  <p class="card-text"><strong>Location: </strong>{{ book.location }}
-                    <br/>
-                    <strong>Description: </strong>{{ book.description }}</p>
-                  <div class="btn-toolbar" role="toolbar">
-                    <div class="btn-group mr-2" role="group" aria-label="First group">
-                      <a href="/?form-category={{ book.category }}" class="btn btn-outline-info">{{ book.category }}</a>
-                    </div>
-                    <div class="btn-group mr-2" role="group" aria-label="Second group">
-                      <a href="#" class="btn btn-primary"><span><i class="fa fa-trash" aria-hidden="true"></i></span> Delete Card</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card-footer text-muted text-center">
-                Card created on: {{ book.createdOn }}
-            </div>
-          </div>
+		{% with messages = get_flashed_messages(with_categories=true) %}
+			{% if messages %}
+				{% for category, message in messages %}
+					<div class="alert {{ category }}" role="alert"> 
+						{{ message|capitalize }}
+					</div>
+				{% endfor %}
+			{% endif %}
+		{% endwith %}
+
+		<div class="card-group">
+			<div class="card w-50" id="main-card">
+				<div class="row no-gutters">
+					<img class="card-img-top h-75" src="../../static/book.jpg" alt="Card image cap">
+					<div class="card-body">
+						<h4 class="card-title text-center">{{ book.title }}</h4>
+						<p class="card-text">
+							<strong>Location: </strong>{{ book.location }}
+							<br/>
+							<strong>Description: </strong>{{ book.description }}
+						</p>
+						<div class="btn-toolbar" role="toolbar">
+							<div class="btn-group mr-2" role="group" aria-label="First group">
+							<a href="/?form-category={{ book.category }}" class="btn btn-outline-info">{{ book.category }}</a>
+							</div>
+							<div class="btn-group mr-2" role="group" aria-label="Second group">
+							<a href="#" class="btn btn-primary"><span><i class="fa fa-trash" aria-hidden="true"></i></span> Delete Card</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer text-muted text-center">
+					Card created on: {{ book.createdOn }}
+				</div>
+			</div>
+
+			<div class="card w-50" id="form-card">
+				<h5 class="card-header text-center">Contact Owner</h5>
+				<div class="card-body">
+					<form action="/book/{{ book.id }}/request" method="post">
+						<div class="form-group">
+							<label for="form-name">Name*</label>
+							<input type="text" class="form-control" name = "form-name" id="form-name" placeholder="Name" required>
+						</div>
+						<div class="form-group">
+							<label for="form-email">Email address*</label>
+							<input type="email" class="form-control" name = "form-email" id="form-email" aria-describedby="emailHelp" placeholder="Email address" required>
+						</div>
+						<div class="form-group">
+							<label for="form-phone">Mobile Number*</label>
+							<input type="tel" class="form-control" name = "form-phone" id="form-phone" placeholder="Mobile Number" required>
+						</div>
+						<div class="form-group">
+							<label for="form-school">School Name*</label>
+							<input type="text" class="form-control" name = "form-school" id="form-school" placeholder="School Name" required>
+						</div>
+						<div class="form-group">
+							<label for="form-reason">Reason*</label>
+							<textarea class="form-control" name = "form-reason" id="form-reason" rows="2"></textarea>
+						</div>
+						<div class="form-row">
+							<div class="col-md-6 mb-3">
+								<label for="form-address">Address*</label>
+								<input type="text" class="form-control" name = "form-address" id="form-address" placeholder="Address" required>
+							</div>
+							<div class="col-md-6 mb-3">
+								<label for="form-location">Location*</label>
+								<select class="form-control" name = "form-location" id="form-location">
+									<option>Bhwani</option>
+									<option>Noida</option>
+									<option>New Delhi</option>
+									<option>Dadri</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group mt-3">
+							<button type="submit" class="btn btn-primary btn-lg btn-block">Request for Book</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<script src="../../static/show_book.js"></script>
+
     </body>
 </html>
