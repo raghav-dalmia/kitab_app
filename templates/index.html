@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Share Kitab </title>
+
+        <!-- bootstrap dependencies -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+        <!-- fontawesome dependencies -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    </head>
+    <body>
+        
+      <nav class="navbar sticky-top navbar-expand-md bg-dark navbar-dark">
+        <!-- Brand -->
+        <a class="navbar-brand" href="#"><span><i class="fa fa-book" aria-hidden="true"></i></span> Share Kitaab</a>
+      
+        <!-- Toggler/collapsibe Button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <!-- Navbar links -->
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/donate-book">Donate Book</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about-us">About Us</a>
+              </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-primary my-2 my-sm-0" data-toggle="modal" data-target="#exampleModal">
+                <span><i class="fa fa-filter" aria-hidden="true"></i></span> Filter
+              </button>
+            </form>
+        </div>
+    </nav>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+	<div class="modal-content">
+		<div class="modal-header">
+		<h5 class="modal-title" id="exampleModalLabel">Apply Filters</h5>
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		</div>
+		<form action="/" method="get">
+			<div class="modal-body">
+				<div class="form-group">
+					<label for="form-email">Email address</label>
+					<input type="email" class="form-control" name = "form-email" id="form-email" aria-describedby="emailHelp" placeholder="Email address">
+				</div>
+				<div class="form-group">
+					<label for="form-location">Location</label>
+					<select class="form-control" name = "form-location" id="form-location">
+            <option>-Select-</option>
+						<option>Bhwani</option>
+						<option>Noida</option>
+						<option>New Delhi</option>
+						<option>Dadri</option>
+					</select>
+				</div>
+        <div class="form-group">
+          <label for="form-category">Category</label>
+          <select class="form-control" name = "form-category" id="form-category">
+              <option>-Select-</option>
+              <option>CBSE-10</option>
+              <option>CBSE-11</option>
+              <option>CBSE-12</option>
+              <option>JEE-11</option>
+              <option>JEE-12</option>
+              <option>NEET-11</option>
+              <option>NEET-12</option>
+              <option>CLAT</option>
+          </select>
+        </div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="submit" class="btn btn-primary">Apply</button>
+			</div>
+		</form>	
+	</div>
+</div>
+</div>
+
+    <div class="card-columns" style="padding: 15dp;">
+
+      {% for book in books %}
+      <div class="card">
+        <img class="card-img-top" src="../static/book.jpg" alt="Card image cap" style="width: 100%; height: 15vw; object-fit: cover;">
+        <div class="card-body">
+          <h5 class="card-title text-center">{{ book.title }}</h5>
+          <p class="card-text"><strong>Location: </strong>{{ book.location }}
+            <br/>
+            <strong>Description: </strong>{{ book.description }}</p>
+
+		  <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+          <a href="/?form-category={{ book.category }}" class="btn btn-outline-info">{{ book.category }}</a>
+        </div>  
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+          <a href="/book/{{ book.id }}/get" class="btn btn-primary"><span><i class="fa fa-phone" aria-hidden="true"></i></span> Contact Owner</a>
+        </div>
+        <div class="btn-group mr-2" role="group" aria-label="Second group">
+          <a href="#" class="btn btn-primary"><span><i class="fa fa-trash" aria-hidden="true"></i></span> Delete Card</a>
+        </div>
+		  </div>
+
+        </div>
+        <div class="card-footer text-muted text-center">
+          Card created on: {{ book.createdOn }}
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+
+
+    </body>
+</html>
