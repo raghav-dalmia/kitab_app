@@ -9,6 +9,7 @@ A website for donating books.
 ## How to run?
 - In `app.py` change absolute path of database file in [line 8](https://github.com/raghav-dalmia/kitab_app/blob/997d2ba4054c2bbff1a7f6d2675168088cddc1b5/app.py#L8).
 - To run application, execute `python app.py`.
+- Enter **Email ID** and **Password** to login for email service.
 - To open website, click the link genetrated by `app.py` while executing the step 2. Generally it is something like [http://127.0.0.1:5000/](http://127.0.0.1:5000/).
 
 ## Screenshots
