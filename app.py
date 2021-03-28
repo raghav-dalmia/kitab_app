@@ -1,19 +1,20 @@
 from flask import Flask, render_template, redirect, request, flash
+from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
 import sqlite3
 import datetime
 import smtplib
+import os
 
 
 app = Flask(__name__)
 app.secret_key = 'fijsdahfiw234242wdashifn9328678324y32687hwu'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://///home/raghav/Desktop/kitab_app/share_kitab.db'
+app.config['UPLOAD_FOLDER'] = "/home/raghav/Desktop/kitab_app/static/images"
 db = SQLAlchemy(app)
 
 s = smtplib.SMTP('smtp.gmail.com', 587)
 s.starttls() 
-me = input("Email id: ")
-password = input("Password: ")
 s.login(me, password) 
 
 
@@ -28,6 +29,7 @@ class Book(db.Model):
 	address = db.Column(db.String(100), nullable=False)
 	location = db.Column(db.String(50), nullable=False)
 	createdOn = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+	image_path = db.Column(db.String(300), default="book.jpg")
 
 	def __repr__(self):
 		return "{} {}".format(self.email, self.title) 
@@ -59,7 +61,6 @@ def home():
 		books = Book.query.filter_by(location=location, email = email)
 	else:
 		books = Book.query.filter_by(location=location, email=email, category = category)
-	print(books)
 	return render_template('index.html', books = books)
 
 @app.route('/donate-book')
@@ -80,9 +81,24 @@ def donation_form():
 	description = request.form['form-description']
 	location = request.form['form-location']
 	address = request.form['form-address']
+	file = request.files['file']
+	filename = datetime.datetime.now().strftime("%a,%d_%b_%Y_%H:%M:%S") + secure_filename(file.filename)
+	image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+	file.save(image_path)
 
 	try:
-		book = Book(username = username, email = email, title = title, category = category, description = description, phone = phone, address = address, location = location)
+		book = Book(
+			username = username, 
+			email = email, 
+			title = title, 
+			category = category, 
+			description = description, 
+			phone = phone, 
+			address = address, 
+			location = location, 
+			image_path = filename
+		)
+
 		db.session.add(book)
 		db.session.commit()
 		flash("Your card created successfully. Thank you for your interest.","alert-success")
@@ -139,19 +155,27 @@ Details:\n
 @app.route('/book/delete/verify', methods=['POST'])
 def delete_book_verify():
 	id = request.form['form-id']
-	print(id)
 	book = Book.query.filter_by(id = id)[0]
 	email = request.form['form-email']
-	print("email: ", email)
 	if(email == book.email):
 		try:
-			s.sendmail(me, book.email, "/book/{}/delete")
+			message = "http://raghavdalmia.pythonanywhere.com/book/{}/delete".format(id)
+			s.sendmail(me, mail, message)
 			flash("Delete link is sent to your email.","alert-success")
 		except:
 			flash("Please try again later!!","alert-danger")
 	else:
 		flash("Please enter your registered Eamil ID!","alert-warning")
 
+	return redirect('/')
+
+@app.route('/book/<id>/delete')
+def delete_book(id):
+	book = Book.query.filter_by(id = id)[0]
+	image_path = os.path.join(app.config['UPLOAD_FOLDER'], book.image_path)
+	os.remove(image_path)
+	db.session.delete(book)
+	db.session.commit()
 	return redirect('/')
 
 if __name__ == '__main__':

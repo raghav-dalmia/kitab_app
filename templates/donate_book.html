@@ -52,7 +52,7 @@
 
         <div class="card" id="donation-form">
             <div class="card-body">
-                <form action="/donation-form" method="post">
+                <form action="/donation-form" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="form-name">Name*</label>
                         <input type="text" class="form-control" name = "form-name" id="form-name" placeholder="Name" required>
@@ -102,6 +102,11 @@
                                 <option>Dadri</option>
                             </select>
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleFormControlFile1">Upload an Image*</label>
+                        <input type="file" class="form-control-file btn" name="file" accept="image/*" capture required>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-lg btn-block">Donate Book</button>
