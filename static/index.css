@@ -2,3 +2,11 @@
     margin: 0;
     padding: 0;
 }
+
+.card{
+    border-radius: 4%!important;
+}
+
+.card-img-top{
+    border-radius: 4% 4% 0 0!important;
+}

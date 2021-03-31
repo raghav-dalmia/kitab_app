@@ -52,7 +52,7 @@
 
         <nav class="navbar sticky-top navbar-expand-md bg-dark navbar-dark">
             <!-- Brand -->
-            <a class="navbar-brand" href="#"> <span><i class="fa fa-book" aria-hidden="true"></i></span> Share Kitaab</a>
+            <a class="navbar-brand" href="/"> <span><i class="fa fa-book" aria-hidden="true"></i></span> Share Kitaab</a>
           
             <!-- Toggler/collapsibe Button -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -95,8 +95,12 @@
 					<div class="card-body">
 						<h4 class="card-title text-center">{{ book.title }}</h4>
 						<p class="card-text">
-							<strong>Location: </strong>{{ book.location }}
+							<strong><span> <i class="fa fa-map-marker" aria-hidden="true"></i> </span> </strong>{{ book.location }}
 							<br/>
+							{% if book.phone != "" %}
+								<strong><span><i class="fa fa-mobile" aria-hidden="true"></i></span></strong> {{ book.phone }}
+								<br/>
+							{% endif %}
 							<strong>Description: </strong>{{ book.description }}
 						</p>
 						<div class="btn-toolbar" role="toolbar">
@@ -104,7 +108,7 @@
 								<a href="/?form-category={{ book.category }}" class="btn btn-outline-info">{{ book.category }}</a>
 							</div>
 							<div class="btn-group mr-2" role="group" aria-label="Second group">
-								<button type="button" id="delete-card" class="btn btn-primary my-2 my-sm-0" data-toggle="modal" data-target="#delete-card-modal">
+								<button type="button" id="delete-card" class="btn btn-primary" data-toggle="modal" data-target="#delete-card-modal">
 									<span><i class="fa fa-trash" aria-hidden="true"></i></span> Delete Card
 								</button>
 							</div>
@@ -112,7 +116,7 @@
 					</div>
 				</div>
 				<div class="card-footer text-muted text-center">
-					Card created on: {{ book.createdOn }}
+					Card created on: {{ book.createdOn.strftime("%a, %d %b %Y") }}
 				</div>
 			</div>
 

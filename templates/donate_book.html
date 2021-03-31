@@ -11,6 +11,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+        <!-- jquery -->
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
 		<!-- fontawesome dependencies -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -23,7 +25,7 @@
         
         <nav class="navbar sticky-top navbar-expand-md bg-dark navbar-dark">
             <!-- Brand -->
-            <a class="navbar-brand" href="#"><span><i class="fa fa-book" aria-hidden="true"></i></span> Share Kitaab</a>
+            <a class="navbar-brand" href="/"><span><i class="fa fa-book" aria-hidden="true"></i></span> Share Kitaab</a>
           
             <!-- Toggler/collapsibe Button -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -63,7 +65,7 @@
                     </div>
                     <div class="form-group">
                         <label for="form-phone">Mobile Number</label>
-                        <input type="tel" class="form-control" name = "form-phone" id="form-phone" placeholder="Mobile Number" required>
+                        <input type="tel" class="form-control" name = "form-phone" id="form-phone" placeholder="Mobile Number (optional)">
                     </div>
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
@@ -73,14 +75,9 @@
                         <div class="col-md-6 mb-3">
                             <label for="form-category">Category*</label>
                             <select class="form-control" name = "form-category" id="form-category">
-                                <option>CBSE-10</option>
-                                <option>CBSE-11</option>
-                                <option>CBSE-12</option>
-                                <option>JEE-11</option>
-                                <option>JEE-12</option>
-                                <option>NEET-11</option>
-                                <option>NEET-12</option>
-                                <option>CLAT</option>
+                                {% for category in categories %}
+                                    <option>{{ category }}</option>
+                                {% endfor %}
                             </select>
                         </div>
                     </div>
@@ -96,17 +93,16 @@
                         <div class="col-md-6 mb-3">
                             <label for="form-location">Location*</label>
                             <select class="form-control" name = "form-location" id="form-location">
-                                <option>Bhwani</option>
-                                <option>Noida</option>
-                                <option>New Delhi</option>
-                                <option>Dadri</option>
+                                {% for location in locations %}
+                                    <option>{{ location }}</option>
+                                {% endfor %}
                             </select>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleFormControlFile1">Upload an Image*</label>
-                        <input type="file" class="form-control-file btn" name="file" accept="image/*" capture required>
+                        <label for="exampleFormControlFile1">Upload an Image</label>
+                        <input type="file" class="form-control-file btn" name="file" accept="image/*" id="fileinput" capture >
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-lg btn-block">Donate Book</button>
@@ -115,5 +111,7 @@
             </div>
         </div>
 
+
+        <script src="../static/donate_book.js"></script>
     </body>
 </html>

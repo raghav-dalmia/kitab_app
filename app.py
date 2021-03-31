@@ -5,6 +5,7 @@ import sqlite3
 import datetime
 import smtplib
 import os
+from constants import *
 
 
 app = Flask(__name__)
@@ -14,7 +15,9 @@ app.config['UPLOAD_FOLDER'] = "/home/raghav/Desktop/kitab_app/static/images"
 db = SQLAlchemy(app)
 
 s = smtplib.SMTP('smtp.gmail.com', 587)
-s.starttls() 
+s.starttls()
+me = "helpinghandsforneedies@gmail.com"
+password = "bansal@123"
 s.login(me, password) 
 
 
@@ -61,15 +64,15 @@ def home():
 		books = Book.query.filter_by(location=location, email = email)
 	else:
 		books = Book.query.filter_by(location=location, email=email, category = category)
-	return render_template('index.html', books = books)
+	return render_template('index.html', books = books, locations = LOCATIONS, categories = CATEGORIES)
 
 @app.route('/donate-book')
 def donate_bool():
-	return render_template('donate_book.html')
+	return render_template('donate_book.html', locations = LOCATIONS, categories = CATEGORIES)
 
 @app.route('/about-us')
 def about_us():
-	return render_template('about_us.html')
+	return render_template('about_us.html', locations = LOCATIONS, categories = CATEGORIES)
 
 @app.route('/donation-form', methods=['POST'])
 def donation_form():
@@ -81,10 +84,16 @@ def donation_form():
 	description = request.form['form-description']
 	location = request.form['form-location']
 	address = request.form['form-address']
-	file = request.files['file']
-	filename = datetime.datetime.now().strftime("%a,%d_%b_%Y_%H:%M:%S") + secure_filename(file.filename)
-	image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-	file.save(image_path)
+	try:
+		file = request.files['file']
+		if(file.filename==""):
+			filename = "book.jpg"
+		else:
+			filename = datetime.datetime.now().strftime("%a,%d_%b_%Y_%H:%M:%S") + secure_filename(file.filename)
+			image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+			file.save(image_path)
+	except:
+		filename = "book.jpg"
 
 	try:
 		book = Book(
@@ -111,7 +120,7 @@ def donation_form():
 
 @app.route('/book/<id>/get')
 def show_book(id):
-	return render_template('show_book.html', book = Book.query.filter_by(id = id)[0])
+	return render_template('show_book.html', book = Book.query.filter_by(id = id)[0], locations = LOCATIONS, categories = CATEGORIES)
 
 @app.route('/book/<id>/request', methods=['POST'])
 def request_book(id):
@@ -159,13 +168,15 @@ def delete_book_verify():
 	email = request.form['form-email']
 	if(email == book.email):
 		try:
-			message = "http://raghavdalmia.pythonanywhere.com/book/{}/delete".format(id)
-			s.sendmail(me, mail, message)
-			flash("Delete link is sent to your email.","alert-success")
+			image_path = os.path.join(app.config['UPLOAD_FOLDER'], book.image_path)
+			db.session.delete(book)
+			db.session.commit()
+			os.remove(image_path)
+			flash("Deleted successfully!!","alert-success")
 		except:
 			flash("Please try again later!!","alert-danger")
 	else:
-		flash("Please enter your registered Eamil ID!","alert-warning")
+		flash("Please enter your registered Eamil ID!!","alert-warning")
 
 	return redirect('/')
 
@@ -173,9 +184,9 @@ def delete_book_verify():
 def delete_book(id):
 	book = Book.query.filter_by(id = id)[0]
 	image_path = os.path.join(app.config['UPLOAD_FOLDER'], book.image_path)
-	os.remove(image_path)
 	db.session.delete(book)
 	db.session.commit()
+	os.remove(image_path)
 	return redirect('/')
 
 if __name__ == '__main__':
