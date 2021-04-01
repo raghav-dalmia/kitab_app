@@ -91,7 +91,9 @@
 		<div class="card-group">
 			<div class="card w-50" id="main-card">
 				<div class="row no-gutters">
-					<img class="card-img-top img-responsive rounded" src="../../static/images/{{ book.image_path }}" alt="Card image cap" height="400">
+					{% if book.image_path != "" %}
+						<img class="card-img-top img-responsive rounded" src="../../static/images/{{ book.image_path }}" alt="Card image cap" height="400">
+					{% endif %}
 					<div class="card-body">
 						<h4 class="card-title text-center">{{ book.title }}</h4>
 						<p class="card-text">

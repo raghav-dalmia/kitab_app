@@ -87,13 +87,13 @@ def donation_form():
 	try:
 		file = request.files['file']
 		if(file.filename==""):
-			filename = "book.jpg"
+			filename = ""
 		else:
 			filename = datetime.datetime.now().strftime("%a,%d_%b_%Y_%H:%M:%S") + secure_filename(file.filename)
 			image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 			file.save(image_path)
 	except:
-		filename = "book.jpg"
+		filename = ""
 
 	try:
 		book = Book(

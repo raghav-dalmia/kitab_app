@@ -113,7 +113,9 @@
 
         {% for book in books %}
           <div class="card" data-aos="flip-up">
-            <img class="card-img-top img-responsive" src="../static/images/{{ book.image_path }}" alt="Card image" height="300">
+            {% if book.image_path != "" %}
+              <img class="card-img-top img-responsive" src="../static/images/{{ book.image_path }}" alt="Card image" height="350">
+            {% endif %}
             <div class="card-body">
               <h5 class="card-title text-center">{{ book.title }}</h5>
               <p class="card-text">

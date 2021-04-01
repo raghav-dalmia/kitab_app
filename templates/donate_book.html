@@ -54,7 +54,7 @@
 
         <div class="card" id="donation-form">
             <div class="card-body">
-                <form action="/donation-form" method="post" enctype="multipart/form-data">
+                <form action="/donation-form" method="post" onsubmit="return validateForm()" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="form-name">Name*</label>
                         <input type="text" class="form-control" name = "form-name" id="form-name" placeholder="Name" required>
@@ -101,8 +101,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleFormControlFile1">Upload an Image</label>
+                        <label for="exampleFormControlFile1">Upload an Image </br><small>(Maximum allowed size is 4 MB.)</small></label>
                         <input type="file" class="form-control-file btn" name="file" accept="image/*" id="fileinput" capture >
+                        <p id="imageSize" class="ml-2"></p>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-lg btn-block">Donate Book</button>
