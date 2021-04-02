@@ -1,3 +1,5 @@
 env
 static/images
 share_kitab.db
+user_data
+__pycache__

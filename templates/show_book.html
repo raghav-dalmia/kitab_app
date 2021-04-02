@@ -95,13 +95,13 @@
 						<img class="card-img-top img-responsive rounded" src="../../static/images/{{ book.image_path }}" alt="Card image cap" height="400">
 					{% endif %}
 					<div class="card-body">
-						<h4 class="card-title text-center">{{ book.title }}</h4>
-						<p class="card-text">
+						<h3 class="card-title text-center">{{ book.title }}</h3>
+						<p class="card-text text-wrap">
 							<strong><span> <i class="fa fa-map-marker" aria-hidden="true"></i> </span> </strong>{{ book.location }}
 							<br/>
 							{% if book.phone != "" %}
 								<strong><span><i class="fa fa-mobile" aria-hidden="true"></i></span></strong> {{ book.phone }}
-								<br/>
+								</br>
 							{% endif %}
 							<strong>Description: </strong>{{ book.description }}
 						</p>
@@ -131,40 +131,57 @@
 							<input type="text" class="form-control" name = "form-name" id="form-name" placeholder="Name" required>
 						</div>
 						<div class="form-group">
-							<label for="form-email">Email address*</label>
-							<input type="email" class="form-control" name = "form-email" id="form-email" aria-describedby="emailHelp" placeholder="Email address" required>
-						</div>
-						<div class="form-group">
 							<label for="form-phone">Mobile Number*</label>
 							<input type="tel" class="form-control" name = "form-phone" id="form-phone" placeholder="Mobile Number" required>
-						</div>
-						<div class="form-group">
-							<label for="form-school">School Name*</label>
-							<input type="text" class="form-control" name = "form-school" id="form-school" placeholder="School Name" required>
 						</div>
 						<div class="form-group">
 							<label for="form-reason">Reason*</label>
 							<textarea class="form-control" name = "form-reason" id="form-reason" rows="2"></textarea>
 						</div>
 						<div class="form-row">
-							<div class="col-md-6 mb-3">
-								<label for="form-address">Address*</label>
-								<input type="text" class="form-control" name = "form-address" id="form-address" placeholder="Address" required>
-							</div>
-							<div class="col-md-6 mb-3">
-								<label for="form-location">Location*</label>
-								<select class="form-control" name = "form-location" id="form-location">
-									<option>Bhwani</option>
-									<option>Noida</option>
-									<option>New Delhi</option>
-									<option>Dadri</option>
-								</select>
-							</div>
+							<label for="form-address">Address*</label>
+							<input type="text" class="form-control" name = "form-address" id="form-address" placeholder="Address" required>
 						</div>
 						<div class="form-group mt-3">
 							<button type="submit" class="btn btn-primary btn-lg btn-block">Request for Book</button>
 						</div>
 					</form>
+				</div>
+			</div>
+		</div>
+
+		<div class="card mx-auto mt-2 ml-2 mr-2 mb-2">
+			<div class="card-body">
+				<h4 class="card-title"><strong>Comments</strong></h4>
+				<div class="card">
+					<div class="card-body">
+						
+						{% for comment in comments %}
+							<p class="text-break"> 
+								{{ comment.comment }}
+								</br>	
+								<small class="text-muted ml-2"> {{ comment.createdOn.strftime("%a, %d %b %Y") }}</small>
+							</p>
+						{% endfor %}
+
+						<form action="/add-comment" method="post">
+							<div class="form-group">
+								<label for="form-comment">Description*</label>
+								<textarea class="form-control" name = "form-comment" id="form-comment" rows="3" placeholder="comment" maxlength="100" required></textarea>
+							</div>
+							<input type="hidden" name = "form-id" id="form-id" value="{{ book.id }}">
+							<div class="form-group">
+								<div class="btn-toolbar" role="toolbar">
+									<div class="btn-group mr-2" role="group" aria-label="First group">
+										<button type="reset" class="btn btn-primary btn btn-block">Reset</button>
+									</div>
+									<div class="btn-group mr-2" role="group" aria-label="Second group">
+										<button type="submit" class="btn btn-primary btn btn-block">Donate Book</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>

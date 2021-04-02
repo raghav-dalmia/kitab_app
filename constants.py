@@ -18,14 +18,31 @@ CATEGORIES = [
 ]
 
 LOCATIONS = [
-    "Bhiwani",
-    "Dadri",
-    "Dinod",
-    "Tigdana",
-    "Loharu",
-    "Noida",
-    "Faridabad",
-    "Gurugram",
-    "Delhi",
+	"Ambala",
+	"Bhiwani",
+	"Charkhi Dadri",
+	"Delhi",
+	"Faridabad",
+	"Fatehabad",
+	"Gurugram (Gurgaon)",
+	"Hisar",
+	"Jhajjar",
+	"Jind",
+	"Kaithal",
+	"Karnal",
+	"Kurukshetra",
+	"Mahendragarh",
+	"Noida",
+	"Nuh",
+	"Palwal",
+	"Panchkula",
+	"Panipat",
+	"Rewari",
+	"Rohtak",
+	"Sirsa",
+	"Sonipat",
+	"Yamunanagar",
 ]
 
+me = "helpinghandsforneedies@gmail.com"
+password = "bansal@123"

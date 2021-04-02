@@ -109,10 +109,10 @@
 </div>
 </div>
 
-    <div class="card-columns mt-1 ml-1 mr-1">
+    <div class="card-columns ml-1 mr-1">
 
         {% for book in books %}
-          <div class="card" data-aos="flip-up">
+          <div class="card mt-2" data-aos="flip-up">
             {% if book.image_path != "" %}
               <img class="card-img-top img-responsive" src="../static/images/{{ book.image_path }}" alt="Card image" height="350">
             {% endif %}
@@ -123,10 +123,9 @@
                 <br/>
                 {% if book.phone != "" %}
                     <strong><span><i class="fa fa-mobile" aria-hidden="true"></i></span></strong> {{ book.phone }}
-                    <br/>
                 {% endif %}
-                <strong>Description: </strong>{{ book.description }}
               </p>
+              <span class="d-inline-block text-truncate" style="max-width: 100%"> <strong>Description: </strong> {{ book.description }}</span>
 
               <div class="btn-toolbar" role="toolbar">
                 <div class="btn-group mr-1" role="group" aria-label="First group">

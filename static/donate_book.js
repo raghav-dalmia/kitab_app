@@ -7,9 +7,9 @@ fileinput.onchange = function(){
 	if(!file) 
 		return;
 	
-	const fsize = Math.round((file.size/1024));
+	const fsize =file.size/1024;
 
-	imageSize.innerHTML = "Image size: " + (fsize/1024).toFixed(2) + "MB."
+	imageSize.innerHTML = "Image size: " + fsize.toFixed(2) + "KB."
 }
 
 function validateForm() {
@@ -20,8 +20,8 @@ function validateForm() {
 	
 	const fsize = Math.round((file.size/1024));
 
-	if(fsize >4096){
-		alert("Image is too big. Maximum size of image can be 4MB.");
+	if(fsize >500.05){
+		alert("Image is too big. Maximum size of image can be 500KB.");
 		return false;
 	}
 	else{
