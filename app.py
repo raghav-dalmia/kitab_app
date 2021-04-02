@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, flash
+from flask import Flask, render_template, redirect, request, flash, send_from_directory, url_for
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
 import sqlite3
@@ -17,8 +17,8 @@ db = SQLAlchemy(app)
 
 
 
-s = smtplib.SMTP('smtp.gmail.com', 587)
-s.starttls()
+# s = smtplib.SMTP('smtp.gmail.com', 587)
+# s.starttls()
 # s.login(me, password) 
 
 
@@ -51,6 +51,18 @@ class Comments(db.Model):
 
 	def __repr__(self):
 		return "{} {}".format(self.pid, self.comment) 
+
+@app.errorhandler(404)
+def page_not_found(e):
+  return render_template('404.html')
+
+@app.errorhandler(500)
+def page_not_found(e):
+  return render_template('404.html')
+
+@app.errorhandler(410)
+def page_not_found(e):
+  return render_template('404.html')
 
 @app.route('/')
 def home():
@@ -299,4 +311,4 @@ def delete_book(id):
 if __name__ == '__main__':
 	db.create_all()
 	app.config['TEMPLATES_AUTO_RELOAD'] = True
-	app.run(debug = True)
+	app.run()
